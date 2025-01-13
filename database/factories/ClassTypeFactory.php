@@ -2,10 +2,11 @@
 
 namespace Database\Factories;
 
+use App\Models\ClassType;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\ClassType>
+ * @extends Factory<ClassType>
  */
 class ClassTypeFactory extends Factory
 {
@@ -21,7 +22,7 @@ class ClassTypeFactory extends Factory
                 'Boxing', 'Cycling', 'Jiu Jitsu', 'Karate', 'Pilates', 'Yoga'
             ]),
             'description' => fake()->paragraph(),
-            'minutes' => fake()->numberBetween(1,5),
+            'minutes' => fake()->numberBetween(1,6),
         ];
     }
 }
