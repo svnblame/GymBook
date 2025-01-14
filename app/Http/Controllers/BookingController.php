@@ -10,15 +10,16 @@ class BookingController extends Controller
     public function index()
     {
         $bookings = auth()->user()->bookings()
-            ->where('date_time', '>', now())
+            ->upcoming()
             ->get();
 
         return view('booking.upcoming', compact('bookings'));
     }
     public function create()
     {
-        $scheduledClasses = ScheduledClass::where('date_time', '>', now())
+        $scheduledClasses = ScheduledClass::upcoming()
             ->with('classType', 'instructor')
+            ->notBooked()
             ->oldest()
             ->get();
 
