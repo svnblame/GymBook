@@ -30,7 +30,7 @@
                     </div>
                 @empty
                     <div>
-                        <p>You have no upcoming classes booked at this time.</p>
+                        <p class="text-lg font-bold text-gray-900 dark:text-gray-400">You have no upcoming classes booked at this time.</p>
                     </div>
                 @endforelse
             </div>
