@@ -3,9 +3,8 @@
 namespace App\Listeners;
 
 use App\Events\ClassCancelled;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Support\Facades\Log;
+use App\Mail\ClassCancelledMail;
+use Illuminate\Support\Facades\Mail;
 
 class NotifyClassCancelled
 {
@@ -22,11 +21,24 @@ class NotifyClassCancelled
      */
     public function handle(ClassCancelled $event): void
     {
-        $scheduledClass = $event->schedule;
+
 
         file_put_contents(
-            storage_path('logs/laravel.log'),
-            "Class Cancelled:\n{$scheduledClass}\n", FILE_APPEND
+            storage_path('logs/cancelled-classes.log'),
+            "Class Cancelled:\n{$event->schedule}\n", FILE_APPEND
         );
+
+        // Notify members that have booked this cancelled class
+        $members = $event->schedule->members();
+
+        $className = $event->schedule->classType->name;
+        $classDateTime = $event->schedule->date_time;
+
+        $details = compact('className', 'classDateTime');
+
+        $members->each(function ($member) use ($details) {
+            Mail::to($member)->send(
+                new ClassCancelledMail($details));
+        });
     }
 }
