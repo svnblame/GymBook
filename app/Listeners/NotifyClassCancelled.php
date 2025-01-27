@@ -4,7 +4,9 @@ namespace App\Listeners;
 
 use App\Events\ClassCancelled;
 use App\Mail\ClassCancelledMail;
+use App\Notifications\ClassCancelledNotification;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Notification;
 
 class NotifyClassCancelled
 {
@@ -29,16 +31,18 @@ class NotifyClassCancelled
         );
 
         // Notify members that have booked this cancelled class
-        $members = $event->schedule->members();
+        $members = $event->schedule->members()->get();
 
         $className = $event->schedule->classType->name;
         $classDateTime = $event->schedule->date_time;
 
         $details = compact('className', 'classDateTime');
 
-        $members->each(function ($member) use ($details) {
-            Mail::to($member)->send(
-                new ClassCancelledMail($details));
-        });
+//        $members->each(function ($member) use ($details) {
+//            Mail::to($member)->send(
+//                new ClassCancelledMail($details));
+//        });
+
+        Notification::send($members, new ClassCancelledNotification($details));
     }
 }
