@@ -16,6 +16,7 @@ class ScheduledClass extends Model
 
     protected $casts = [
         'date_time' => 'datetime',
+        'instructor_id' => 'integer',
     ];
 
     public function instructor(): BelongsTo
