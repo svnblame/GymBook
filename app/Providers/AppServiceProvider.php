@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Events\ClassCancelled;
 use App\Models\User;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 

@@ -9,7 +9,18 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
-                    Hello Instructor!
+                    @can('schedule-class')
+                        <div>
+                            <a class="inline-block mt-6 underline text-sm" href="{{ route('schedule.create') }}">
+                                Schedule Class
+                            </a>
+                        </div>
+                        <div>
+                            <a class="inline-block mt-6 underline text-sm" href="{{ route('schedule.index') }}">
+                                Upcoming Classes
+                            </a>
+                        </div>
+                    @endcan
                 </div>
             </div>
         </div>

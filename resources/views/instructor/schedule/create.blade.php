@@ -15,7 +15,7 @@
                         <div class="space-y-6">
                             <div>
                                 <label for="class_type_id" class="text-lg">Select type of class</label>
-                                <select name="class_type_id" id="class_type_id" class="block mt-2 w-full border-gray-300 focus:ring-2 dark:focus-visible:ring-white focus:border-gray-500 dark:focus:border-blue-700">
+                                <select name="class_type_id" id="class_type_id" class="block mt-2 w-full border-gray-300 focus:ring-2 dark:text-white dark:bg-gray-700 dark:focus-visible:ring-white focus:border-gray-500 dark:focus-border-blue-700">
                                     @foreach ($classTypes as $classType)
                                         <option value="{{ $classType->id }}">{{ $classType->name }}</option>
                                     @endforeach
@@ -24,11 +24,11 @@
                             <div class="flex gap-6">
                                 <div class="flex-1">
                                     <label for="date" class="text-lg">Date</label>
-                                    <input type="date" name="date" class="block mt-2 w-full border-gray-300 focus:ring focus:border-gray-500" min="{{ date('Y-m-d', strtotime('tomorrow')) }}">
+                                    <input type="date" name="date" class="block mt-2 w-full border-gray-300 focus:ring focus:border-gray-500 dark:bg-gray-700" min="{{ date('Y-m-d', strtotime('tomorrow')) }}">
                                 </div>
                                 <div class="flex-1">
                                     <label for="time" class="text-lg">Time</label>
-                                    <select type="time" name="time" id="time" class="block mt-2 w-full border-gray-300 focus:ring focus:border-gray-500">
+                                    <select type="time" name="time" id="time" class="block mt-2 w-full border-gray-300 focus:ring focus:border-gray-500 dark:bg-gray-700">
                                         <option value="05:00:00">5 am</option>
                                         <option value="06:00:00">6 am</option>
                                         <option value="07:00:00">7 am</option>
