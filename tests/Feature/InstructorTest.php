@@ -12,6 +12,8 @@ use Tests\TestCase;
 
 class InstructorTest extends TestCase
 {
+    use RefreshDatabase;
+
     public function test_instructor_is_redirected_to_instructor_dashboard(): void
     {
         $user = User::factory()->create([
@@ -78,6 +80,36 @@ class InstructorTest extends TestCase
 
         // Then
         $this->assertDatabaseMissing('scheduled_classes', [
+            'id' => $scheduledClass->id,
+        ]);
+    }
+
+    public function test_cannot_cancel_class_less_than_two_hours_before_start(): void
+    {
+        // Given
+        $user = User::factory()->create([
+            'role' => 'instructor'
+        ]);
+
+        $this->seed(ClasstypeSeeder::class);
+
+        $scheduledClass = ScheduledClass::create([
+            'instructor_id' => $user->id,
+            'class_type_id' => ClassType::first()->id,
+            'date_time' => now()->addHours(1)->minutes(0)->seconds(0),
+        ]);
+
+        // When
+        $response = $this->actingAs($user)
+            ->get('instructor/schedule/');
+
+        $response->assertDontSeeText('Cancel');
+
+        $response = $this->actingAs($user)
+            ->delete('instructor/schedule/' . $scheduledClass->id);
+
+        // Then - scheduled class should NOT be deleted
+        $this->assertDatabaseHas('scheduled_classes', [
             'id' => $scheduledClass->id,
         ]);
     }
