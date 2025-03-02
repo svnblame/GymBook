@@ -21,7 +21,7 @@
                                     <p class="text-sm">{{ $schedule->date_time->format('jS M') }}</p>
                                 </div>
                             </div>
-                            @can('delete', $class)
+                            @can('delete', $schedule)
                                 <div class="mt-1 text-right">
                                     <form method="post" action="{{ route('schedule.destroy', $schedule) }}">
                                         @csrf
